@@ -2,15 +2,6 @@ import 'package:bloc/bloc.dart';
 
 import 'counter.dart';
 
-
-class CounterState {
-  final int counter;
-
-  const CounterState({this.counter});
-
-  factory CounterState.initial() => CounterState(counter: 0);
-}
-
 class CounterBloc extends Bloc<CounterEvent, CounterState> {
   void onIncrement() {
     dispatch(IncrementEvent());
