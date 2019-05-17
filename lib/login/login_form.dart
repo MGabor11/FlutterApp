@@ -20,6 +20,10 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+
+  static const userFieldText = 'Username';
+  static const passwordFieldText = 'Password';
+
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -48,11 +52,11 @@ class _LoginFormState extends State<LoginForm> {
           child: Column(
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: 'username'),
+                decoration: InputDecoration(labelText: userFieldText,  hintText: userFieldText),
                 controller: _usernameController,
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'password'),
+                decoration: InputDecoration(labelText: passwordFieldText,  hintText: passwordFieldText),
                 controller: _passwordController,
                 obscureText: true,
               ),

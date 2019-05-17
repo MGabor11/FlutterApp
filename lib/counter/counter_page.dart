@@ -1,25 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_app/widget/widget.dart';
 
 import 'counter.dart';
+import 'counter_progress_widget.dart';
 
 class CounterPage extends StatefulWidget {
-  CounterPage({Key key,  @required this.title}) : super(key: key);
+  CounterPage({Key key, @required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _CounterPage createState() => _CounterPage();
+  _CounterPageState createState() => _CounterPageState();
 }
 
-class _CounterPage extends State<CounterPage> {
-  final _counterBloc = CounterBloc();
+class _CounterPageState extends State<CounterPage> {
+  CounterBloc _counterBloc;
+
+  @override
+  void initState() {
+    _counterBloc = CounterBloc();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      bloc: _counterBloc,
-      child: CounterWidget(widget: widget)
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Container(
+          child: Center(
+              child: Column(
+        children: <Widget>[
+          SimpleCheckBoxWidget(),
+          CounterProgressWidget(),
+          BlocProvider(bloc: _counterBloc, child: CounterWidget())
+        ],
+      ))),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          FloatingActionButton(
+            heroTag: "btn1",
+            onPressed: () => _counterBloc.onIncrement(),
+            tooltip: 'Increment',
+            child: Icon(Icons.add),
+          ),
+          SizedBox(width: 10),
+          FloatingActionButton(
+            heroTag: "btn2",
+            onPressed: () => _counterBloc.onDecrement(),
+            tooltip: 'Decrement',
+            child: Icon(Icons.remove),
+          ),
+        ],
+      ),
     );
   }
 
@@ -29,61 +65,3 @@ class _CounterPage extends State<CounterPage> {
     super.dispose();
   }
 }
-
-class CounterWidget extends StatelessWidget {
-  const CounterWidget({
-    Key key,
-    @required this.widget,
-  }) : super(key: key);
-
-  final CounterPage widget;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: BlocBuilder(
-          bloc: BlocProvider.of<CounterBloc>(context),
-          builder: (context, CounterState state) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'You have pushed the button this many times:',
-                  ),
-                  Text(
-                    '${state.counter}',
-                    style: Theme.of(context).textTheme.display1,
-                  ),
-                ],
-              ),
-            );
-          }),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          FloatingActionButton(
-            heroTag: "btn1",
-            onPressed: () =>
-                BlocProvider.of<CounterBloc>(context).onIncrement(),
-            tooltip: 'Increment',
-            child: Icon(Icons.add),
-          ),
-          SizedBox(width: 10),
-          FloatingActionButton(
-            heroTag: "btn2",
-            onPressed: () =>
-                BlocProvider.of<CounterBloc>(context).onDecrement(),
-            tooltip: 'Decrement',
-            child: Icon(Icons.remove),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-

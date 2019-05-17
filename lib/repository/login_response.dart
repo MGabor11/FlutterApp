@@ -17,6 +17,6 @@ class Post {
 
   @override
   String toString() {
-    return 'userId: $userId ';
+    return 'userId: $userId body: $body';
   }
 }

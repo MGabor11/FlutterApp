@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'counter.dart';
 
 class CounterBloc extends Bloc<CounterEvent, CounterState> {
+
   void onIncrement() {
     dispatch(IncrementEvent());
   }
