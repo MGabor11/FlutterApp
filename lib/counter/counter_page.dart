@@ -34,7 +34,8 @@ class _CounterPageState extends State<CounterPage> {
               child: Column(
         children: <Widget>[
           SimpleCheckBoxWidget(),
-          CounterProgressWidget(),
+          BlocProvider(bloc: _counterBloc, child: CounterProgressWidget()),
+          SizedBox(height: 50),
           BlocProvider(bloc: _counterBloc, child: CounterWidget())
         ],
       ))),
